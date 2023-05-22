@@ -20,3 +20,7 @@ class Product(UserAudit):
 
     def get_absolute_url(self):
         return reverse("apiv1:products", kwargs={"sku": self.sku})
+
+    def is_stock_sufficient(self, orders: int) -> bool:
+        return self.quantity - orders > 0
+

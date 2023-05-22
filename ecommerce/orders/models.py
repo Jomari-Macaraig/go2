@@ -12,12 +12,13 @@ class Order(Audit):
         COMPLETED = "COMPLETED", "COMPLETED"
 
     order_number = models.IntegerField(primary_key=True)
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, null=True, blank=True)
     status = models.CharField(max_length=10, choices=Statuses.choices, default=Statuses.PENDING)
     products = models.ManyToManyField(
         Product,
-        through='OrderProduct'
+        through="OrderProduct"
     )
+    meta = models.JSONField(null=True, blank=True)
 
     def __str__(self):
         return str(self.order_number)
