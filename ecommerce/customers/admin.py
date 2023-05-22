@@ -5,10 +5,10 @@ from .models import Customer
 
 
 class CustomerAdmin(AuditModelAdmin):
-    list_display = [
+    list_display = (
         "email",
         "name",
-    ]
+    )
 
 
 admin.site.register(Customer, CustomerAdmin)
