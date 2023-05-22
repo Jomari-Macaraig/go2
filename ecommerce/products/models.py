@@ -1,4 +1,6 @@
 from django.db import models
+from django.urls import reverse
+
 from ecommerce.core.models import UserAudit
 
 
@@ -15,3 +17,6 @@ class Product(UserAudit):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse("apiv1:products", kwargs={"sku": self.sku})

@@ -19,7 +19,7 @@ Postgresql for psql command
 $ git clone <repo-url> go2
 $ cd go2
 ```
-### 2. Setting environment variable.
+### 2. Setting environment variables.
 Please see env.template for environment variable to be setup for the project
 
 ### 3. Create virtual environment and install requirements.
