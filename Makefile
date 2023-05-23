@@ -3,6 +3,7 @@ SHELL := /bin/bash
 .PHONY:
 	clean
 	initialize_database
+	initialize_rabbitmq
 
 help:
 	@echo "clean - remove all artifacts"
@@ -28,3 +29,8 @@ initialize_rabbitmq:
 	sleep 6
 	docker exec -it rabbitmq  /tmp/scripts/create_user.sh
 	docker stop rabbitmq
+
+start_dev:
+	make clean
+	docker-compose -f compose/development.yml run -d --rm --name postgres --service-ports postgres
+	docker-compose -f compose/development.yml run -d --rm --name rabbitmq --service-ports rabbitmq

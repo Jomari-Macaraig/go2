@@ -18,3 +18,6 @@ class Notification(Audit):
     event = models.CharField(max_length=64)
     meta = models.JSONField(null=True, blank=True)
 
+    def complete_notification(self):
+        self.status = Statuses.COMPLETED
+        self.save()

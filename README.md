@@ -13,8 +13,11 @@ Latest Docker and Docker Compose for your OS
 Postgresql for psql command
 - [postgresql](https://www.postgresql.org/download/)
 
+Python
+- Python3.9
+
 ## Setting up development
-### 1. Clone the project
+### 1. Cloning the project.
 ```commandline
 $ git clone <repo-url> go2
 $ cd go2
@@ -22,23 +25,43 @@ $ cd go2
 ### 2. Setting environment variables.
 Please see env.template for environment variables to be configured for the project
 
-### 3. Create virtual environment and install requirements.
+### 3. Creating virtual environment and install requirements.
+```commandline
+$ virtualenv /venv/<name>
+$ source /venv/<name>
+$ pip install -r requirements/development.txt
+```
 
 ### 4. Initialize database and rabbitmq, this will create user. Please omit this if done previously
 ```commandline
 $ make initialize_database
 $ make initialize_rabbitmq
 ```
-### 5. Run migration
+
+### 7. Start postgres and rabbitmq
+```commandline
+$ make start_dev
+```
+
+### 6. Run migration
 ```commandline
 $ python manage.py migrate
 ```
 
-### 6. Run development server
+### 7. Run development server
 ```commandline
-python manage.py runserver
+$ python manage.py runserver
 ```
 
+### 8. Run celery worker, create another window. Set environment variable before executing command
+```commandline
+$ celery -A config worker --loglevel=INFO
+```
+
+### 9. Run dummy smtp, create another window. Set environment variable before executing command
+```commandline
+$ aiosmtpd -n -l ${EMAIL_HOST}:${EMAIL_PORT}
+```
 ### Running standalone services
 
 #### Postgres
