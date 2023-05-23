@@ -2,12 +2,15 @@ from typing import Dict
 
 from celery import shared_task
 
-from .models import Notification, NotificationType
-from .factories import channel_factory
 from .channels.email import EmailChannelBuilder
-
+from .constants import Event
+from .emails.processed_order import ProcessedOrder
+from .factories import channel_factory, email_factory
+from .models import Notification, NotificationType
 
 channel_factory.register_builder(NotificationType.EMAIL, EmailChannelBuilder())
+
+email_factory.register_builder(Event.PROCESSED_ORDER.value, ProcessedOrder)
 
 
 @shared_task

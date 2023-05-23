@@ -1,14 +1,16 @@
 from django.core.mail import EmailMessage
 
 from .base import BaseChannel
+from ..factories import email_factory
 
 
 class EmailChannel(BaseChannel):
 
     def __call__(self, notification, *args, **kwargs):
+        subject, body = email_factory.get(notification.event)(meta=notification.meta)
         EmailMessage(
-            subject="subject",
-            body="message",
+            subject=subject,
+            body=body,
             to=[notification.recipient]
         ).send()
         notification.complete_notification()
