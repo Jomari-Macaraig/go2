@@ -62,7 +62,7 @@ Create three tmux session for the ff
 
 Please check [this](https://tmuxcheatsheet.com/) cheat sheet to do that.
 
-### 6. Run development server.
+### 7. Run development server.
 Attach to one tmux session to run the development server
 ```commandline
 $ python manage.py runserver 0.0.0.0:8000
@@ -86,6 +86,16 @@ Detach to the tmux session and createsuper user.
 $ python manage.py createsuperuser
 ```
 
+### 11. Create test data in django admin.
+
+### 12. Play around with web APIs in browser
+- /api/v1/products/<sku>
+- /api/v1/products/
+  - can be filtered by **_status_**(boolean) parameter.
+- /api/v1/orders/  
+
+Please see **_ecommerce.core.apiv1_urls.py_** for more information.
+
 ### Running standalone services
 
 #### Postgres
@@ -105,3 +115,4 @@ $ make initialize_database
 $ make initialize_rabbitmq
 ```
 Stop the container, increase the sleep count in the Makefile and rerun again.
+
