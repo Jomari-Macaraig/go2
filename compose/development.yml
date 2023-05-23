@@ -3,10 +3,12 @@ version: '3.1'
 services:
   postgres:
     extends:
-        file: base.yml
-        service: postgres
-    environment:
-      POSTGRES_PASSWORD: ${POSTGRES_SUPER_USER_PASSWORD}
-    ports:
-      - "${POSTGRES_PORT}:5432"
+      file: base.yml
+      service: postgres
     container_name: dev-go2-pg
+
+  rabbitmq:
+    extends:
+      file: base.yml
+      service: rabbitmq
+    container_name: dev-go2-rabbitmq

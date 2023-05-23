@@ -20,7 +20,7 @@ $ git clone <repo-url> go2
 $ cd go2
 ```
 ### 2. Setting environment variables.
-Please see env.template for environment variable to be setup for the project
+Please see env.template for environment variables to be configured for the project
 
 ### 3. Create virtual environment and install requirements.
 
@@ -39,7 +39,13 @@ python manage.py runserver
 ```
 
 ### Running standalone services
+
 #### Postgres
 ```commandline
 $ docker-compose -f compose/development.yml run -d --rm --name postgres --service-ports postgres
+```
+
+#### Rabbitmq
+```commandline
+$ docker-compose -f compose/development.yml run -d --rm --name rabbitmq --service-ports rabbitmq 
 ```

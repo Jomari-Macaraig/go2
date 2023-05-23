@@ -12,7 +12,7 @@ class ProductListAPIView(ListAPIView):
 
     def get_queryset(self):
         queryset = Product.objects.all()
-        status = self.request.query_params.get("status")
+        status = self.request.query_params.get("status", "")
 
         if status:
             status = status.lower()
@@ -21,6 +21,7 @@ class ProductListAPIView(ListAPIView):
             queryset = queryset.filter(quantity__gt=0)
         elif status == "false":
             queryset = queryset.filter(quantity=0)
+
         return queryset
 
 
