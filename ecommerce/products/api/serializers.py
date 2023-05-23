@@ -26,7 +26,7 @@ class ProductSerializer(serializers.ModelSerializer):
 
 class SimpleProductSerializer(serializers.Serializer):
     sku = serializers.CharField(max_length=128)
-    quantity = serializers.IntegerField()
+    quantity = serializers.IntegerField(min_value=0)
 
     def create(self, validated_data):
         pass

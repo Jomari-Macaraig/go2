@@ -7,6 +7,7 @@ from rest_framework.views import APIView
 
 from ecommerce.products.api.serializers import SimpleProductSerializer
 from .serializers import OrderSerializer
+from ..tasks import process_order
 
 
 class CreateOrder(APIView):
@@ -25,7 +26,7 @@ class CreateOrder(APIView):
             return response
 
         order.save()
-
+        process_order.apply_async(kwargs={"order_number": order.data["order_number"]})
         return Response(order.data)
 
     def _validate_order(self, request) -> Tuple:
