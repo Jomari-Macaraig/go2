@@ -18,5 +18,13 @@ initialize_database:
 	make clean
 	docker-compose -f compose/development.yml run -d --rm --name postgres --service-ports postgres
 	sleep 1
-	. scripts/build/database/create_user_and_db.sh
+	. scripts/database/create_user_and_db.sh
 	docker stop postgres
+
+initialize_rabbitmq:
+	make clean
+	docker-compose -f compose/development.yml run -d --rm --name rabbitmq --service-ports rabbitmq
+	chmod 777 scripts/rabbitmq/create_user.sh
+	sleep 6
+	docker exec -it rabbitmq  /tmp/scripts/create_user.sh
+	docker stop rabbitmq

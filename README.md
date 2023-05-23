@@ -24,7 +24,7 @@ Please see env.template for environment variables to be configured for the proje
 
 ### 3. Create virtual environment and install requirements.
 
-### 4. Initialize database.
+### 4. Initialize database and rabbitmq, this will create user. Please omit this if done previously
 ```commandline
 $ make initialize_database
 ```

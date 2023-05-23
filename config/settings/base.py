@@ -51,7 +51,7 @@ DJANGO_APPS = [
 ]
 
 THIRD_PARTY_APPS = [
-    "rest_framework"
+    "rest_framework",
 ]
 
 LOCAL_APPS = [
@@ -157,3 +157,12 @@ REST_FRAMEWORK = {
         "rest_framework.permissions.IsAdminUser",
     ),
 }
+
+# CELERY & RABBITMQ
+BROKER_HOST = get_env_variable("RABBITMQ_HOST")
+BROKER_PORT = get_env_variable("RABBITMQ_PORT")
+BROKER_USER = get_env_variable("RABBITMQ_DEFAULT_USER")
+BROKER_PASS = get_env_variable("RABBITMQ_DEFAULT_PASS")
+BROKER_VHOST = get_env_variable("RABBITMQ_DEFAULT_VHOST")
+
+CELERY_BROKER_URL = f"amqp://{BROKER_USER}:{BROKER_PASS}@{BROKER_HOST}:{BROKER_PORT}/{BROKER_VHOST}"

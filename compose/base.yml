@@ -18,11 +18,12 @@ services:
     volumes:
       - ../lib/rabbitmq:/var/lib/rabbitmq
       - ../logs/rabbitmq:/var/log/rabbitmq
+      - ../scripts/rabbitmq:/tmp/scripts
     hostname: "go2-rabbitmq"
     environment:
       RABBITMQ_DEFAULT_USER: "${RABBITMQ_DEFAULT_USER}"
       RABBITMQ_DEFAULT_PASS: "${RABBITMQ_DEFAULT_PASS}"
       RABBITMQ_DEFAULT_VHOST: "${RABBITMQ_DEFAULT_VHOST}"
     ports:
-      - "${RABBITMQ_PORT}:5432"
+      - "${RABBITMQ_PORT}:5672"
     container_name: go2-rabbitmq
