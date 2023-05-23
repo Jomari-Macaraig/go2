@@ -12,3 +12,15 @@ services:
       file: base.yml
       service: rabbitmq
     container_name: dev-go2-rabbitmq
+
+  web:
+    extends:
+      file: base.yml
+      service: web
+    depends_on:
+      - postgres
+      - rabbitmq
+    ports:
+      - "8000:8000"
+      - "2326:22"
+    container_name: dev-go2-web

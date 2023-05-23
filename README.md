@@ -13,8 +13,6 @@ Latest Docker and Docker Compose for your OS
 Postgresql for psql command
 - [postgresql](https://www.postgresql.org/download/)
 
-Python
-- Python3.9
 
 ## Setting up development
 ### 1. Cloning the project.
@@ -22,51 +20,68 @@ Python
 $ git clone <repo-url> go2
 $ cd go2
 ```
-### 2. Set environment variables.
-Please see env.template for environment variables to be configured for the project
 
-### 3. Create virtual environment and install requirements.
+### 2. Initialize database and rabbitmq.
+This will create user. Please omit this if done previously  
+Please see env.template for environment variables to be configured for the project.  
+Replace some environment variables for the meantime(we're using __0.0.0.0__ for local setup)
 ```commandline
-$ virtualenv /venv/<name>
-$ source /venv/<name>
-$ pip install -r requirements/development.txt
+$ export POSTGRES_HOST=0.0.0.0
+$ export RABBITMQ_HOST=0.0.0.0
 ```
-
-### 4. Initialize database and rabbitmq.
-This will create user. Please omit this if done previously
+Run command
 ```commandline
 $ make initialize_database
 $ make initialize_rabbitmq
 ```
 
-### 7. Start postgres and rabbitmq.
+### 3. Spin up web, postgres and rabbitmq services.
 ```commandline
-$ make start_dev
+$ docker-compose -f compose/development.yml run --rm --name dev-go2-web --service-ports web /bin/bash
+$ su go2
 ```
 
-### 6. Run migration.
+### 4. Set environment variables.
+Please see env.template for environment variables to be configured for the project.  
+Don't use the previous environment variables, replace it with
+```commandline
+$ export POSTGRES_HOST=postgres
+$ export RABBITMQ_HOST=rabbitmq
+```
+
+### 5. Run migration.
 ```commandline
 $ python manage.py migrate
 ```
 
-### 7. Run development server.
+### 6. Create tmux session
+Create three tmux session for the ff
+- development server
+- celery worker
+- dummy smtp  
+
+Please check [this](https://tmuxcheatsheet.com/) cheat sheet to do that.
+
+### 6. Run development server.
+Attach to one tmux session to run the development server
 ```commandline
-$ python manage.py runserver
+$ python manage.py runserver 0.0.0.0:8000
 ```
 
 ### 8. Run celery worker.
-Create another window. Set environment variable before executing command
+Attach to one tmux session to run celery worker
 ```commandline
 $ celery -A config worker --loglevel=INFO
 ```
 
 ### 9. Run dummy smtp.
-Create another window. Set environment variable before executing command
+Attach to one tmux session to run aiosmtpd
 ```commandline
 $ aiosmtpd -n -l ${EMAIL_HOST}:${EMAIL_PORT}
 ```
 
 ### 10. Create django admin superuser.
+Detach to the tmux session and createsuper user.
 ```commandline
 $ python manage.py createsuperuser
 ```
@@ -89,4 +104,4 @@ $ docker-compose -f compose/development.yml run -d --rm --name rabbitmq --servic
 $ make initialize_database
 $ make initialize_rabbitmq
 ```
-Try to update the sleep count in the Makefile.
+Stop the container, increase the sleep count in the Makefile and rerun again.

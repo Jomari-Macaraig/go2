@@ -27,3 +27,14 @@ services:
     ports:
       - "${RABBITMQ_PORT}:5672"
     container_name: go2-rabbitmq
+
+  web:
+    restart: always
+    build:
+      context: ../
+    image: go2-web
+    volumes:
+      - ../:/srv/go2
+    container_name: go2-web
+    working_dir: "/srv/go2"
+    command: "/usr/sbin/sshd -D"
