@@ -1,16 +1,15 @@
+from typing import Dict
+
 from django.core.validators import MinValueValidator
 from django.db import models
 
 from ecommerce.core.models import Audit
+from ecommerce.core.models import Statuses
 from ecommerce.customers.models import Customer
 from ecommerce.products.models import Product
 
 
 class Order(Audit):
-    class Statuses(models.TextChoices):
-        PENDING = "PENDING", "PENDING"
-        FAILED = "FAILED", "FAILED"
-        COMPLETED = "COMPLETED", "COMPLETED"
 
     order_number = models.PositiveIntegerField(primary_key=True)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, null=True, blank=True)
@@ -23,6 +22,20 @@ class Order(Audit):
 
     def __str__(self):
         return str(self.order_number)
+
+    def add_customer(self, customer: Customer):
+        self.customer = customer
+        self.save()
+
+    def complete_order(self):
+        self.meta = None
+        self.status = Statuses.COMPLETED
+        self.save()
+
+    def fail_order(self, meta: Dict):
+        self.meta = meta
+        self.status = Statuses.FAILED
+        self.save()
 
 
 class OrderProduct(Audit):

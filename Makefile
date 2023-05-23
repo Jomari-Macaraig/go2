@@ -17,7 +17,7 @@ clean:
 initialize_database:
 	make clean
 	docker-compose -f compose/development.yml run -d --rm --name postgres --service-ports postgres
-	sleep 1
+	sleep 6
 	. scripts/database/create_user_and_db.sh
 	docker stop postgres
 

@@ -2,6 +2,12 @@ from django.db import models
 from django.conf import settings
 
 
+class Statuses(models.TextChoices):
+    PENDING = "PENDING", "PENDING"
+    FAILED = "FAILED", "FAILED"
+    COMPLETED = "COMPLETED", "COMPLETED"
+
+
 class Audit(models.Model):
 
     created_time = models.DateTimeField(auto_now_add=True)

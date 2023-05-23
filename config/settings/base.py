@@ -59,6 +59,7 @@ LOCAL_APPS = [
     "ecommerce.products",
     "ecommerce.customers",
     "ecommerce.orders",
+    "ecommerce.notifications",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS

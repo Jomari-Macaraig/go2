@@ -27,6 +27,7 @@ Please see env.template for environment variables to be configured for the proje
 ### 4. Initialize database and rabbitmq, this will create user. Please omit this if done previously
 ```commandline
 $ make initialize_database
+$ make initialize_rabbitmq
 ```
 ### 5. Run migration
 ```commandline
@@ -49,3 +50,11 @@ $ docker-compose -f compose/development.yml run -d --rm --name postgres --servic
 ```commandline
 $ docker-compose -f compose/development.yml run -d --rm --name rabbitmq --service-ports rabbitmq 
 ```
+
+### Troubleshooting
+1. If you run an issue with running with
+```commandline
+$ make initialize_database
+$ make initialize_rabbitmq
+```
+Try to update the sleep count in the Makefile.
